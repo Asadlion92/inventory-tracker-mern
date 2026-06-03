@@ -1,0 +1,1 @@
+This project is about creating an inventory tracker using the MERN stack
