@@ -1,12 +1,22 @@
 import express from "express";
-import itemRoutes from './routes/itemRoutes.js'
+import itemRoutes from './routes/itemRoutes.js';
+import { connectDB } from "./config/db.js";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app = express();
+const PORT = process.env.PORT || 3000;
 
-app.use("api/inventory", itemRoutes);
+connectDB();
 
-app.listen(5001, () => {
-    console.log("Server is running on port 5001")
+//middleware
+app.use(express.json());
+
+app.use("/api/inventory", itemRoutes);
+
+app.listen(PORT, () => {
+    console.log("Server is running on PORT:", PORT)
 });
 
 export default app;
