@@ -18,6 +18,9 @@ const itemSchema = new mongoose.Schema({
         required: true,
         enum: ["Electronics", "Tools", "Office Supplies", "Safety Equipment", "Consumables", "Others"]
     }
+},
+{
+    timestamps: true
 });
 
 const Item = mongoose.model("Item", itemSchema);
