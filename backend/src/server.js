@@ -3,6 +3,7 @@ import itemRoutes from './routes/itemRoutes.js';
 import { connectDB } from "./config/db.js";
 import dotenv from "dotenv";
 import rateLimiter from "./middleware/Ratelimiter.js";
+import cors from 'cors';
 
 dotenv.config();
 
@@ -10,6 +11,9 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 //middleware
+app.use(cors({
+    origin: 'http://localhost:5173',
+}));
 app.use(express.json());
 app.use(rateLimiter);
 

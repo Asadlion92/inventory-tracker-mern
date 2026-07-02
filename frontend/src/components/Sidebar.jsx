@@ -6,7 +6,7 @@ const Sidebar = () => {
   return (
     <div className="drawer lg:drawer-open">
         <input id="my-drawer-3" type="checkbox" className="drawer-toggle" />
-        <div className="drawer-content flex flex-col items-center justify-center">
+        <div className="drawer-content p-6">
             {/* Page content here */}
             <Outlet />
             <label htmlFor="my-drawer-3" className="btn drawer-button lg:hidden">
@@ -17,7 +17,7 @@ const Sidebar = () => {
             <label htmlFor="my-drawer-3" aria-label="close sidebar" className="drawer-overlay"></label>
             <ul className="menu bg-base-200 min-h-full w-80 p-4">
             {/* Sidebar content here */}
-            <li className='pointer-events-none'><span><Box className='text-blue-600 size-8'/><p className='text-xl'>Inventory Tracker</p></span></li>
+            <li className='pointer-events-none'><span><Box className='text-blue-600 size-8'/><p className='text-xl font-bold'>Inventory Tracker</p></span></li>
             <li><Link to={'/'}><span><House /></span>Dashboard</Link></li>
             <li><Link to={'/items'}><span><Package /></span>Items</Link></li>
             <li><Link to={'/categories'}><span><Tag /></span>Categories</Link></li>
