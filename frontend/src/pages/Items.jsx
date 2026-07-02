@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Plus } from 'lucide-react'
+import { Plus, Pencil, Trash2 } from 'lucide-react'
 import { Link } from 'react-router'
 import RateLimitedUI from '../components/RateLimitedUI'
 import axios from 'axios'
@@ -48,12 +48,35 @@ const Items = () => {
         {loading && <div className='text-center text-primary py-10 text-xl'>Loading items...</div>}
 
         {items.length > 0 && !isRateLimited && (
-          <div>
-            {items.map((item) => (
-              <div>
-                {item.name}
-              </div>
-              ))}
+          <div className="overflow-x-auto">
+            <table className="table">
+              {/* head */}
+              <thead>
+                <tr>
+                  <th></th>
+                  <th>Item Name</th>
+                  <th>Quantity</th>
+                  <th>Price</th>
+                  <th>Category</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {items.map((item) => (
+                  <tr className="hover:bg-base-300">
+                    <th></th>
+                    <td>{item.name}</td>
+                    <td>{item.quantity}</td>
+                    <td>${item.price}</td>
+                    <td>{item.category}</td>
+                    <td>
+                      <button className="btn btn-outline btn-info mr-2"><Pencil /></button>
+                      <button className="btn btn-outline btn-error ml-2"><Trash2 /></button>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         )}
       </div>
