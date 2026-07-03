@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Plus, Pencil, Trash2 } from 'lucide-react'
+import { Plus, Pencil, Trash2, ArrowLeft, ArrowRight } from 'lucide-react'
 import { Link } from 'react-router'
 import RateLimitedUI from '../components/RateLimitedUI'
 import axios from 'axios'
@@ -10,6 +10,10 @@ const Items = () => {
   const [isRateLimited, setIsRateLimited] = useState(false);
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  //pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 3;
 
   useEffect(()=>{
     const fetchItems = async () => {
@@ -32,6 +36,14 @@ const Items = () => {
 
     fetchItems();
   }, [])
+
+  //pagination 
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+
+  const currentItems = items.slice(startIndex, endIndex);
+
+  const totalPages = Math.ceil(items.length / itemsPerPage);
 
   return (
     <div>
@@ -62,8 +74,8 @@ const Items = () => {
                 </tr>
               </thead>
               <tbody>
-                {items.map((item) => (
-                  <tr className="hover:bg-base-300">
+                {currentItems.map((item) => (
+                  <tr key={item._id} className="hover:bg-base-300">
                     <th></th>
                     <td>{item.name}</td>
                     <td>{item.quantity}</td>
@@ -79,6 +91,39 @@ const Items = () => {
             </table>
           </div>
         )}
+      </div>
+      <div className='flex justify-center mt-4'>
+        <div className="join">
+
+          <button
+            className="join-item btn"
+            disabled={currentPage === 1}
+            onClick={() => setCurrentPage(currentPage - 1)}
+          >
+            <ArrowLeft />
+          </button>
+
+          {Array.from({ length: totalPages }, (_, index) => (
+            <button
+              key={index}
+              className={`join-item btn ${
+                currentPage === index + 1 ? "btn-primary" : ""
+              }`}
+              onClick={() => setCurrentPage(index + 1)}
+            >
+              {index + 1}
+            </button>
+          ))}
+
+          <button
+            className="join-item btn"
+            disabled={currentPage === totalPages}
+            onClick={() => setCurrentPage(currentPage + 1)}
+          >
+            <ArrowRight />
+          </button>
+
+        </div>
       </div>
     </div>
   )
