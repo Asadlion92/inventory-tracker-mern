@@ -13,7 +13,7 @@ const Items = () => {
 
   //pagination state
   const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 3;
+  const itemsPerPage = 5;
 
   useEffect(()=>{
     const fetchItems = async () => {
@@ -46,52 +46,66 @@ const Items = () => {
   const totalPages = Math.ceil(items.length / itemsPerPage);
 
   return (
-    <div>
-      <div className='flex items-center justify-between'>
-        <h1 className='text-4xl font-bold'>Items</h1>
-        <Link to={'/add'} className='btn btn-primary'>
+    <div className='max-w-7xl mx-auto p-4'>
+      <div className='flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4'>
+        <h1 className='text-2xl sm:text-3xl md:text-4xl font-bold text-center sm:text-left'>Items</h1>
+        {/* <Link to={'/add'} className='btn btn-primary w-fit self-center sm:self-auto'>
           <Plus />
           <span>Add Item</span>
-        </Link>
+        </Link> */}
+        <button className="btn btn-primary w-fit self-center sm:self-auto" onClick={()=>document.getElementById('my_modal_3').showModal()}><Plus />Add Item</button>
       </div>
+
+      {/*MODAL DIALOG BOX*/}
+      <dialog id="my_modal_3" className="modal">
+        <div className="modal-box">
+          <form method="dialog">
+            {/* if there is a button in form, it will close the modal */}
+            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
+          </form>
+          <h3 className="font-bold text-lg">Hello!</h3>
+          <p className="py-4">Press ESC key or click on ✕ button to close</p>
+        </div>
+      </dialog>
+
+      
+
+
       {isRateLimited && <RateLimitedUI/>}
+      {loading && <div className='text-center text-primary py-10 text-xl'>Loading items...</div>}
 
-      <div className='max-w-7xl mx-auto p-4 mt-6'>
-        {loading && <div className='text-center text-primary py-10 text-xl'>Loading items...</div>}
-
-        {items.length > 0 && !isRateLimited && (
-          <div className="overflow-x-auto">
-            <table className="table">
-              {/* head */}
-              <thead>
-                <tr>
+      {items.length > 0 && !isRateLimited && (
+        <div className="overflow-x-auto">
+          <table className="table min-w-[700px]">
+            {/* head */}
+            <thead>
+              <tr>
+                <th></th>
+                <th>Item Name</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Category</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {currentItems.map((item) => (
+                <tr key={item._id} className="hover:bg-base-300">
                   <th></th>
-                  <th>Item Name</th>
-                  <th>Quantity</th>
-                  <th>Price</th>
-                  <th>Category</th>
-                  <th>Actions</th>
+                  <td>{item.name}</td>
+                  <td>{item.quantity}</td>
+                  <td>${item.price}</td>
+                  <td>{item.category}</td>
+                  <td>
+                    <button className="btn btn-outline btn-info mr-2"><Pencil /></button>
+                    <button className="btn btn-outline btn-error ml-2"><Trash2 /></button>
+                  </td>
                 </tr>
-              </thead>
-              <tbody>
-                {currentItems.map((item) => (
-                  <tr key={item._id} className="hover:bg-base-300">
-                    <th></th>
-                    <td>{item.name}</td>
-                    <td>{item.quantity}</td>
-                    <td>${item.price}</td>
-                    <td>{item.category}</td>
-                    <td>
-                      <button className="btn btn-outline btn-info mr-2"><Pencil /></button>
-                      <button className="btn btn-outline btn-error ml-2"><Trash2 /></button>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </div>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
       <div className='flex justify-center mt-4'>
         <div className="join">
 
@@ -126,6 +140,7 @@ const Items = () => {
         </div>
       </div>
     </div>
+
   )
 }
 
