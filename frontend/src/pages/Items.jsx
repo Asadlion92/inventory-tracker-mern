@@ -49,27 +49,11 @@ const Items = () => {
     <div className='max-w-7xl mx-auto p-4'>
       <div className='flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4'>
         <h1 className='text-2xl sm:text-3xl md:text-4xl font-bold text-center sm:text-left'>Items</h1>
-        {/* <Link to={'/add'} className='btn btn-primary w-fit self-center sm:self-auto'>
+        <Link to={'/add'} className='btn btn-primary w-fit self-center sm:self-auto'>
           <Plus />
           <span>Add Item</span>
-        </Link> */}
-        <button className="btn btn-primary w-fit self-center sm:self-auto" onClick={()=>document.getElementById('my_modal_3').showModal()}><Plus />Add Item</button>
+        </Link>
       </div>
-
-      {/*MODAL DIALOG BOX*/}
-      <dialog id="my_modal_3" className="modal">
-        <div className="modal-box">
-          <form method="dialog">
-            {/* if there is a button in form, it will close the modal */}
-            <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2">✕</button>
-          </form>
-          <h3 className="font-bold text-lg">Hello!</h3>
-          <p className="py-4">Press ESC key or click on ✕ button to close</p>
-        </div>
-      </dialog>
-
-      
-
 
       {isRateLimited && <RateLimitedUI/>}
       {loading && <div className='text-center text-primary py-10 text-xl'>Loading items...</div>}
