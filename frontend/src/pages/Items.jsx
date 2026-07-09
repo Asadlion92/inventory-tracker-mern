@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import { Plus, Pencil, Trash2, ArrowLeft, ArrowRight } from 'lucide-react'
-import { Link } from 'react-router'
-import RateLimitedUI from '../components/RateLimitedUI'
-import axios from 'axios'
+import React, { useEffect, useState } from 'react';
+import { Plus, Pencil, Trash2, ArrowLeft, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router';
+import RateLimitedUI from '../components/RateLimitedUI';
 import { toast } from 'react-hot-toast';
+import api from './../lib/axios';
 
 const Items = () => {
 
@@ -18,7 +18,7 @@ const Items = () => {
   useEffect(()=>{
     const fetchItems = async () => {
       try {
-        const res = await axios.get('http://localhost:3000/api/inventory');
+        const res = await api.get('/inventory');
         setItems(res.data);
         setIsRateLimited(false);
         console.log(res.data)
