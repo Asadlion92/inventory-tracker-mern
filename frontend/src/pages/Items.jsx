@@ -7,6 +7,19 @@ import api from './../lib/axios';
 
 const Items = () => {
 
+  // const handleDelete = async (e, id) => {
+  //   if (!window.confirm("Are you sure you want to delete this item?")) return;
+
+  //   try {
+  //     await api.delete(`/edit/${id}`);
+  //     toast.success("Item successfully deleted")
+  //   } catch (error) {
+  //     console.log("Error in handleDelete", error);
+  //     toast.error("Failed to delete item");
+  //   }
+
+  // };
+
   const [isRateLimited, setIsRateLimited] = useState(false);
   const [items, setItems] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -81,8 +94,12 @@ const Items = () => {
                   <td>${item.price}</td>
                   <td>{item.category}</td>
                   <td>
-                    <button className="btn btn-outline btn-info mr-2"><Pencil /></button>
-                    <button className="btn btn-outline btn-error ml-2"><Trash2 /></button>
+                    <Link to={`/edit/${item._id}`} className='btn btn-outline btn-info mr-2'><Pencil /></Link>
+                    {/* <button className="btn btn-outline btn-info mr-2"><Pencil /></button> */}
+                    <button 
+                      className="btn btn-outline btn-error ml-2"
+                      onClick={(e) => handleDelete(e, item._id)}
+                      ><Trash2 /></button>
                   </td>
                 </tr>
               ))}
