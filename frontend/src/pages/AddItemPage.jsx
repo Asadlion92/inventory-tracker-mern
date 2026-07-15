@@ -136,7 +136,7 @@ const AddItemPage = () => {
 
             <div className='card-actions justify-end'>
               <button type='submit' className='btn btn-primary' disabled={loading}>
-                {loading ? "Saving..." : "Save"}
+                {loading ? "Saving..." : "Save Item"}
               </button>
             </div>
 

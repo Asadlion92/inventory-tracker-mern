@@ -4,21 +4,23 @@ import { Link } from 'react-router';
 import RateLimitedUI from '../components/RateLimitedUI';
 import { toast } from 'react-hot-toast';
 import api from './../lib/axios';
+import ItemsNotFound from '../components/ItemsNotFound';
 
 const Items = () => {
 
-  // const handleDelete = async (e, id) => {
-  //   if (!window.confirm("Are you sure you want to delete this item?")) return;
+  const handleDelete = async (e, id) => {
+    if (!window.confirm("Are you sure you want to delete this item?")) return;
 
-  //   try {
-  //     await api.delete(`/edit/${id}`);
-  //     toast.success("Item successfully deleted")
-  //   } catch (error) {
-  //     console.log("Error in handleDelete", error);
-  //     toast.error("Failed to delete item");
-  //   }
+    try {
+      await api.delete(`/inventory/${id}`);
+      toast.success("Item successfully deleted")
+    } catch (error) {
+      console.log("Error in handleDelete", error);
+      toast.error("Failed to delete item");
+    }
 
-  // };
+    setItems((prev) => prev.filter((item) => item._id !== id)); //gets rid of deleted item
+  };
 
   const [isRateLimited, setIsRateLimited] = useState(false);
   const [items, setItems] = useState([]);
@@ -71,6 +73,8 @@ const Items = () => {
       {isRateLimited && <RateLimitedUI/>}
       {loading && <div className='text-center text-primary py-10 text-xl'>Loading items...</div>}
 
+      {items.length === 0 && !isRateLimited && <ItemsNotFound />}
+
       {items.length > 0 && !isRateLimited && (
         <div className="overflow-x-auto">
           <table className="table min-w-[700px]">
@@ -107,39 +111,41 @@ const Items = () => {
           </table>
         </div>
       )}
-      <div className='flex justify-center mt-4'>
-        <div className="join">
 
-          <button
-            className="join-item btn"
-            disabled={currentPage === 1}
-            onClick={() => setCurrentPage(currentPage - 1)}
-          >
-            <ArrowLeft />
-          </button>
-
-          {Array.from({ length: totalPages }, (_, index) => (
+      {/*Pagination*/}
+      {totalPages > 1 && (
+        <div className="flex justify-center mt-4">
+          <div className="join">
             <button
-              key={index}
-              className={`join-item btn ${
-                currentPage === index + 1 ? "btn-primary" : ""
-              }`}
-              onClick={() => setCurrentPage(index + 1)}
+              className="join-item btn"
+              disabled={currentPage === 1}
+              onClick={() => setCurrentPage(currentPage - 1)}
             >
-              {index + 1}
+              <ArrowLeft />
             </button>
-          ))}
 
-          <button
-            className="join-item btn"
-            disabled={currentPage === totalPages}
-            onClick={() => setCurrentPage(currentPage + 1)}
-          >
-            <ArrowRight />
-          </button>
+            {Array.from({ length: totalPages }, (_, index) => (
+              <button
+                key={index}
+                className={`join-item btn ${
+                  currentPage === index + 1 ? "btn-primary" : ""
+                }`}
+                onClick={() => setCurrentPage(index + 1)}
+              >
+                {index + 1}
+              </button>
+            ))}
 
+            <button
+              className="join-item btn"
+              disabled={currentPage === totalPages}
+              onClick={() => setCurrentPage(currentPage + 1)}
+            >
+              <ArrowRight />
+            </button>
+          </div>
         </div>
-      </div>
+      )}
     </div>
 
   )
