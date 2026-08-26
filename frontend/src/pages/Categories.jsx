@@ -12,31 +12,37 @@ const categoryIcons = {
   Consumables: {
     icon: Package2,
     color: "text-blue-500",
+    chartColor: "#3b82f6",
   },
 
   Electronics: {
     icon: Laptop,
     color: "text-purple-500",
+    chartColor: "#a855f7",
   },
 
   "Office Supplies": {
     icon: NotebookText,
     color: "text-green-500",
+    chartColor: "#22c55e",
   },
 
   Others: {
     icon: Ellipsis,
     color: "text-gray-500",
+    chartColor: "#6b7280",
   },
 
   "Safety Equipment": {
     icon: Shield,
-    color: "text-red-500",
+    color: "text-red-800",
+    chartColor: "#991b1b",
   },
 
   Tools: {
     icon: Wrench,
     color: "text-orange-500",
+    chartColor: "#f97316",
   },
 };
 
@@ -44,7 +50,7 @@ const categoryIcons = {
     const fetchCategories = async () => {
       try {
         const res = await api.get("/inventory");
-        console.log(res.data)
+        // console.log(res.data)
 
         const categoryData = Object.values(
           res.data.reduce((acc, item) => {
@@ -104,11 +110,40 @@ const categoryIcons = {
         })}
       </div>
 
-      <div>
-        <h2 className="text-2xl font-bold mt-10">Category Summary</h2>
+      <div className="flex justify-between items-center">
         <div>
+          <h2 className="text-2xl font-bold mt-10 mb-5">Category Summary</h2>
           <h3>Total Categories: {totalCategories}</h3>
           <h3>Total Items: {totalItems}</h3>
+        </div>
+        <div className="h-96">
+          <Doughnut 
+            data={{
+              labels: categories.map((category) => category.category),
+              datasets: [
+                {
+                  label: "Categories",
+                  data: categories.map((category) => category.totalItems),
+                  backgroundColor: categories.map((category) => categoryIcons[category.category].chartColor),
+
+                  borderWidth: 2,
+                }
+              ],
+            }}
+            options={{
+              plugins: {
+                legend: {
+                  labels: {
+                    color: "#ffffff",
+                    font: {
+                      size: 14,
+                      weight: "bold",
+                    },
+                  },
+                },
+              },
+            }}
+          />
         </div>
       </div>
     </div>
