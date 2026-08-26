@@ -2,6 +2,8 @@ import CategoryCard from "../components/CategoryCard";
 import api from "../lib/axios";
 import { useEffect, useState } from "react";
 import { Laptop, Wrench, NotebookText, Shield, Package2, Ellipsis } from 'lucide-react'
+import { Chart as ChartJS } from 'chart.js/auto'
+import { Doughnut } from 'react-chartjs-2'
 
 const Categories = () => {
   const [categories, setCategories] = useState([]);
@@ -64,6 +66,7 @@ const categoryIcons = {
         );
 
         setCategories(categoryData);
+        console.log(categoryData)
       } catch (error) {
         console.log("Error fetching categories", error);
       }
@@ -71,6 +74,10 @@ const categoryIcons = {
 
     fetchCategories();
   }, []);
+
+  const totalCategories = categories.length;
+  const totalItems = categories.reduce((total, category) => total + category.totalItems, 0);
+
 
   return (
     <div>
@@ -95,6 +102,14 @@ const categoryIcons = {
             />
           );
         })}
+      </div>
+
+      <div>
+        <h2 className="text-2xl font-bold mt-10">Category Summary</h2>
+        <div>
+          <h3>Total Categories: {totalCategories}</h3>
+          <h3>Total Items: {totalItems}</h3>
+        </div>
       </div>
     </div>
   );
