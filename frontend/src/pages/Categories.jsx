@@ -110,40 +110,56 @@ const categoryIcons = {
         })}
       </div>
 
-      <div className="flex justify-between items-center">
-        <div>
-          <h2 className="text-2xl font-bold mt-10 mb-5">Category Summary</h2>
+      <div className="flex flex-col lg:flex-row items-center gap-10">
+        <div className="flex-1">
+          <h2 className="text-2xl font-bold mb-5">Category Summary</h2>
           <h3>Total Categories: {totalCategories}</h3>
           <h3>Total Items: {totalItems}</h3>
         </div>
-        <div className="h-96">
-          <Doughnut 
-            data={{
-              labels: categories.map((category) => category.category),
-              datasets: [
-                {
-                  label: "Categories",
-                  data: categories.map((category) => category.totalItems),
-                  backgroundColor: categories.map((category) => categoryIcons[category.category].chartColor),
-
-                  borderWidth: 2,
-                }
-              ],
-            }}
-            options={{
-              plugins: {
-                legend: {
-                  labels: {
-                    color: "#ffffff",
-                    font: {
-                      size: 14,
-                      weight: "bold",
-                    },
+        <div className="flex items-center justify-center gap-8">
+          <div className="w-80 h-80">
+            <Doughnut
+              data={{
+                labels: categories.map((category) => category.category),
+                datasets: [
+                  {
+                    data: categories.map((category) => category.totalItems),
+                    backgroundColor: categories.map((category) => categoryIcons[category.category].chartColor),
+                    borderColor: "#fff",
+                    borderWidth: 2,
+                  }
+                ],
+              }}
+              options={{
+                plugins: {
+                  legend: {
+                    display: false
                   },
                 },
-              },
-            }}
-          />
+              }}
+            />
+          </div>
+
+          <div className="flex flex-col gap-4">
+            {categories.map((category) => (
+              <div
+                key={category.category}
+                className="flex items-center gap-3"
+              >
+                <div
+                  className="w-3 h-3 rounded-full"
+                  style={{
+                    backgroundColor:
+                      categoryIcons[category.category].chartColor,
+                  }}
+                />
+
+                <span className="font-semibold">
+                  {category.category}
+                </span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
