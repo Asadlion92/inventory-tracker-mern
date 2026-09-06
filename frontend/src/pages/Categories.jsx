@@ -110,7 +110,7 @@ const categoryIcons = {
         })}
       </div>
 
-      <div className="flex flex-col lg:flex-row items-center gap-10">
+      <div className="flex flex-col lg:flex-row items-center gap-10 mt-10">
         <div className="flex-1">
           <h2 className="text-2xl font-bold mb-5">Category Summary</h2>
           <h3>Total Categories: {totalCategories}</h3>
