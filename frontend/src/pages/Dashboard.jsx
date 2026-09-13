@@ -95,7 +95,7 @@ const Dashboard = () => {
 
   return (
     <div>
-      <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold">
+      <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center md:text-left">
         Dashboard
       </h1>
       <div className='mt-5 flex flex-col gap-8 md:flex-row justify-around items-center w-auto'>
@@ -124,9 +124,9 @@ const Dashboard = () => {
       </div>
       <div className='mt-10 flex justify-evenly flex-col gap-16 items-center md:flex-row'>
         <div>
-          <h2 className='text-xl font-bold'>Inventory Value By Category</h2>
-          <div className="flex items-center justify-center gap-8 pt-8">
-            <div className="w-60 h-60">
+          <h2 className='text-xl font-bold text-center md:text-left'>Inventory Value By Category</h2>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-8 pt-8">
+            <div className="w-60 h-60 relative">
               <Doughnut
                 data={{
                   labels: categories.map((category) => category.category),
@@ -140,6 +140,8 @@ const Dashboard = () => {
                   ],
                 }}
                 options={{
+                  responsive: true,
+                  maintainAspectRatio: false,
                   plugins: {
                     legend: {
                       display: false
@@ -149,7 +151,7 @@ const Dashboard = () => {
               />
             </div>
   
-            <div className="flex flex-col gap-4">
+            <div className="flex flex-row flex-wrap justify-center gap-3 sm:flex-col sm:gap-4">
               {categories.map((category) => (
                 <div
                   key={category.category}

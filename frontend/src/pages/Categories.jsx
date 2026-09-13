@@ -87,7 +87,7 @@ const categoryIcons = {
 
   return (
     <div>
-      <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold">
+      <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center md:text-left">
         Categories
       </h1>
 
@@ -110,14 +110,14 @@ const categoryIcons = {
         })}
       </div>
 
-      <div className="flex flex-col lg:flex-row items-center gap-10 mt-10">
-        <div className="flex-1">
+      <div className="flex flex-col lg:flex-row items-center gap-6 mt-10 px-10">
+        <div className="flex-1 text-center">
           <h2 className="text-2xl font-bold mb-5">Category Summary</h2>
           <h3>Total Categories: {totalCategories}</h3>
           <h3>Total Items: {totalItems}</h3>
         </div>
-        <div className="flex items-center justify-center gap-8">
-          <div className="w-80 h-80">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-8 mb-10">
+          <div className="w-60 h-60 relative">
             <Doughnut
               data={{
                 labels: categories.map((category) => category.category),
@@ -131,6 +131,8 @@ const categoryIcons = {
                 ],
               }}
               options={{
+                responsive: true,
+                maintainAspectRatio: false,
                 plugins: {
                   legend: {
                     display: false
@@ -140,7 +142,7 @@ const categoryIcons = {
             />
           </div>
 
-          <div className="flex flex-col gap-4">
+          <div className="flex flex-row flex-wrap justify-center gap-3 sm:flex-col sm:gap-4">
             {categories.map((category) => (
               <div
                 key={category.category}
