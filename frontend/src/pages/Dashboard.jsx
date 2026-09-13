@@ -2,10 +2,45 @@ import { Package, CircleDollarSign, Tag, MoveRight } from 'lucide-react';
 import api from "../lib/axios";
 import { useEffect, useState } from "react";
 import { Link } from 'react-router';
+import { Chart as ChartJS } from 'chart.js/auto'
+import { Doughnut } from 'react-chartjs-2'
+
 const Dashboard = () => {
 
   const [categories, setCategories] = useState([]);
   const [items, setItems] = useState([]);
+
+  const categoryIcons = {
+    Consumables: {
+      color: "text-blue-500",
+      chartColor: "#3b82f6",
+    },
+
+    Electronics: {
+      color: "text-purple-500",
+      chartColor: "#a855f7",
+    },
+
+    "Office Supplies": {
+      color: "text-green-500",
+      chartColor: "#22c55e",
+    },
+
+    Others: {
+      color: "text-gray-500",
+      chartColor: "#6b7280",
+    },
+
+    "Safety Equipment": {
+      color: "text-red-800",
+      chartColor: "#991b1b",
+    },
+
+    Tools: {
+      color: "text-orange-500",
+      chartColor: "#f97316",
+    },
+  };
 
   const recentItems = items.slice(0, 3);
 
@@ -63,7 +98,7 @@ const Dashboard = () => {
       <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold">
         Dashboard
       </h1>
-      <div className='mt-5 flex justify-around'>
+      <div className='mt-5 flex flex-col gap-8 md:flex-row justify-around items-center w-auto'>
         <div className='flex w-48 justify-between p-2 border-solid border-4 border-gray-500 rounded-xl'>
           <Package className='bg-blue-500 rounded-full size-20 p-4'/>
           <div className='flex flex-col justify-center items-center w-20'>
@@ -87,11 +122,56 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-      <div className='mt-10 flex justify-evenly'>
-        <div className='border-2 border-gray-500 w-1/3 p-5 rounded-2xl'>
+      <div className='mt-10 flex justify-evenly flex-col gap-16 items-center md:flex-row'>
+        <div>
           <h2 className='text-xl font-bold'>Inventory Value By Category</h2>
+          <div className="flex items-center justify-center gap-8 pt-8">
+            <div className="w-60 h-60">
+              <Doughnut
+                data={{
+                  labels: categories.map((category) => category.category),
+                  datasets: [
+                    {
+                      data: categories.map((category) => category.totalPrice),
+                      backgroundColor: categories.map((category) => categoryIcons[category.category].chartColor),
+                      borderColor: "#fff",
+                      borderWidth: 2,
+                    }
+                  ],
+                }}
+                options={{
+                  plugins: {
+                    legend: {
+                      display: false
+                    },
+                  },
+                }}
+              />
+            </div>
+  
+            <div className="flex flex-col gap-4">
+              {categories.map((category) => (
+                <div
+                  key={category.category}
+                  className="flex items-center gap-3"
+                >
+                  <div
+                    className="w-3 h-3 rounded-full"
+                    style={{
+                      backgroundColor:
+                        categoryIcons[category.category].chartColor,
+                    }}
+                  />
+  
+                  <span className="font-semibold">
+                    {category.category}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
-        <div className='border-2 border-gray-500 w-1/3 p-5 rounded-2xl'>
+        <div className='border-2 border-gray-500 md:w-1/4 w-auto p-5 rounded-2xl'>
           <h2 className='text-xl font-bold'>Recent Items Added</h2>
           <div>
             {recentItems.map((item) => (
