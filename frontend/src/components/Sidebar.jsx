@@ -24,7 +24,6 @@ const Sidebar = () => {
           <li><Link to={'/'}><span><House /></span>Dashboard</Link></li>
           <li><Link to={'/items'}><span><Package /></span>Items</Link></li>
           <li><Link to={'/categories'}><span><Tag /></span>Categories</Link></li>
-          <li><Link to={'/reports'}><span><ChartColumn /></span>Reports</Link></li>
           <li><Link to={'/settings'}><span><Settings /></span>Settings</Link></li>
           </ul>
       </div>

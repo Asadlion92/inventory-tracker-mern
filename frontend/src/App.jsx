@@ -6,7 +6,6 @@ import Sidebar from './components/Sidebar';
 import Dashboard from './pages/Dashboard';
 import Items from './pages/Items';
 import Categories from './pages/Categories';
-import Reports from './pages/Reports';
 import Settings from './pages/Settings';
 
 const App = () => {
@@ -17,7 +16,6 @@ const App = () => {
           <Route index element={<Dashboard />} />
           <Route path='/items' element={<Items />} />
           <Route path='/categories' element={<Categories />} />
-          <Route path='/reports' element={<Reports />} />
           <Route path='/settings' element={<Settings />} />
           <Route path='/add' element={<AddItemPage />} />
           <Route path='/edit/:id' element={<EditItemPage />} />
